@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { SearchBarComponent } from '../../shared/search-bar/search-bar.component';
 import { FilterButtonComponent, FilterOption } from '../../shared/filter-button/filter-button.component';
-import { BoostingTableComponent, BoostRow, BoostType } from '../boosting-table/boosting-table.component';
+import { BoostingTableComponent, BoostRow, BoostType } from '../../shared/boosting-table/boosting-table.component';
 
 interface FiltersState {
   q: string;

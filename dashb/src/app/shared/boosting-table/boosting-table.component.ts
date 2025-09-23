@@ -13,6 +13,29 @@ export interface BoostRow {
 
 type RowAction = 'view' | 'details' | 'cancel';
 
+export interface BoostOffer {
+  gameName: string;
+  currentRank: string;
+  desiredRank: string;
+  currentRP: string;
+  platform: string;
+  notes?: string;
+  priceUSD: number;
+  sectionLabel?: string;
+}
+
+export interface BoostOfferRow {
+  id: number | string;
+  game: string;
+  time: string;
+  prices: string[];
+  requirements: string[];
+  comments?: string;
+
+  /** TOT ce-ți trebuie ca să alimentezi modalul */
+  details: BoostOffer;
+}
+
 @Component({
   selector: 'app-boosting-table',
   standalone: true,

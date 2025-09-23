@@ -1,4 +1,26 @@
 :host{
-  display:block;
-  height:100%;
+  /* OCUPĂ ÎNTREAGA PAGINĂ */
+  position: fixed; /* nu depinde de app.component */
+  inset: 0;
+  display: block;
+
+  /* TEMA LOCALĂ (extrasa din poză, navy + verde butoane) */
+  --bg-0: #0b1220;   /* fundal */
+  --bg-1: #0f1826;   /* panouri */
+  --bg-2: #121c2b;   /* panouri +1 */
+  --border: #1f2c3f; /* contururi */
+  --muted: #8aa0b8;  /* text secondary */
+  --text:  #e7eefb;  /* text principal */
+  --accent:#2f64ff;  /* albastru accent (dacă îți trebuie) */
+  --success:#2bb673; /* buton Next (verde) */
+  --ghost:#2a3342;   /* buton Prev */
+  --overlay: rgba(9,14,24,.55); /* background overlay */
+
+  font-family: Inter, system-ui, Segoe UI, Roboto, Arial, sans-serif;
+  color: var(--text);
+
+  /* fundal ușor gradient ca în modal-ul din poză */
+  background:
+    radial-gradient(1200px 600px at 50% -200px, #12203b55 0, transparent 60%),
+    linear-gradient(180deg, var(--bg-0), #0a0f1a 60%, #0a0f1a);
 }

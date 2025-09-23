@@ -1,101 +1,92 @@
-:host{ display:block; width:100% }
+:host{
+  display:block;
+  color: var(--text);
+}
 
-/* card-ul central */
 .card{
-  width:100%;
-  background: color-mix(in oklab, var(--panel-2) 88%, transparent);
-  border:1px solid var(--border);
-  border-radius:16px;
-  overflow:hidden;
-  box-shadow: 0 10px 30px rgba(0,0,0,.35);
-  display:flex; flex-direction:column;
+  width: 100%;
+  background: var(--bg-1);             /* panou navy */
+  border: 1px solid var(--border);     /* contur subtil */
+  border-radius: 14px;
+  box-shadow: 0 18px 50px rgba(0,0,0,.45);
+  overflow: hidden;
+  display: flex; flex-direction: column;
 }
 
-/* header */
+/* HEADER */
 .card__header{
-  padding:20px 22px 6px;
-  border-bottom:1px solid color-mix(in oklab, var(--border) 70%, transparent);
+  padding: 18px 22px 8px;
+  border-bottom: 1px solid color-mix(in oklab, var(--border) 70%, transparent);
 }
-.card__title{
-  text-align:center;
-  font-weight:700;
-  font-size:20px;
-  margin-bottom:8px;
-}
-.card__game{
-  font-size:16px;
-  opacity:.9;
+.card__title{ font-size: 22px; font-weight: 800; }
+.card__game{ margin-top: 8px; color: var(--muted); }
+
+/* BODY */
+.card__body{
+  padding: 20px 22px;
+  display: grid;
+  grid-template-columns: 1fr auto; /* info + box preț în dreapta */
+  gap: 24px;
 }
 
-/* corp */
-.card__body{
-  display:grid;
-  grid-template-columns: 1fr auto; /* info + stiva de preț */
-  gap:24px;
-  padding:20px 22px;
-}
-.details{
-  display:flex; flex-direction:column; gap:8px;
-}
-.row{
-  display:flex; gap:8px; align-items:baseline;
-  font-size:15px;
-}
-.row span{ color:var(--muted) }
+.details{ display:flex; flex-direction:column; gap:10px; }
+.row{ display:flex; gap:8px; align-items:baseline; font-size:15px; }
+.row span{ color: var(--muted); }
 
 .notes{
   grid-column: 1 / -1;
-  display:flex; flex-direction:column; gap:8px; margin-top:12px;
+  display:flex; flex-direction:column; gap:6px; margin-top:6px;
 }
-.notes .label{ color:var(--muted); font-size:14px }
+.notes .label{ color: var(--muted); font-size: 13px; }
 .notes .box{
-  min-height:64px;
-  border:1px dashed var(--border);
-  border-radius:10px;
-  padding:10px 12px;
-  background: #0f141b80;
+  min-height: 64px;
+  border: 1px solid var(--border);
+  background: var(--bg-2);
+  border-radius: 10px;
+  padding: 10px 12px;
 }
 
-/* preț */
+/* “Section” + preț (ca în badge + card mic) */
 .price-stack{
   grid-row: 1 / 3;
   display:flex; flex-direction:column; gap:10px; align-items:flex-end;
 }
 .chip{
-  background:#1a2230; border:1px solid #243044;
-  color:var(--text); padding:6px 10px; border-radius:10px; font-size:12px; font-weight:600;
+  background:#1b2636; border:1px solid #233149;
+  padding:6px 10px; border-radius:10px; font-size:12px; font-weight:700;
+  color:#c9d7ea;
 }
 .price-card{
-  min-width:210px;
-  background:#2a3547;
-  border:1px solid #2b3a52;
-  border-radius:12px;
-  padding:14px 18px;
-  display:flex; justify-content:space-between; align-items:center; gap:18px;
+  min-width: 220px;
+  background:#222d40; border:1px solid #2a3a52;
+  border-radius: 12px; padding: 14px 18px;
+  display:flex; justify-content:space-between; align-items:center;
 }
-.price-label{ color:#b9c7dd; font-weight:600 }
-.price-value{ font-weight:800; font-size:18px }
+.price-label{ color:#a9b9cf; font-weight:700; }
+.price-value{ font-weight:800; font-size:18px; }
 
-/* footer cu 3 butoane egal distanțate */
+/* FOOTER — 3 butoane ca în bară */
 .card__footer{
-  display:grid; grid-template-columns: 1fr 1fr 1fr; gap:10px;
-  border-top:1px solid color-mix(in oklab, var(--border) 70%, transparent);
-  padding:12px;
+  display:grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px;
+  border-top: 1px solid color-mix(in oklab, var(--border) 70%, transparent);
+  padding: 12px;
 }
+
+/* butoane locale */
 .btn{
-  border:1px solid var(--border);
-  background:var(--panel-2);
-  color:var(--text);
-  padding:12px 14px;
-  border-radius:10px;
-  font-weight:700;
-  line-height:1;
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  gap:8px;
-  cursor:pointer;
+  appearance:none; border-radius: 10px;
+  padding: 12px 14px; font-weight: 800;
+  line-height: 1; cursor: pointer;
+  display: inline-flex; align-items:center; justify-content:center;
+  border: 1px solid var(--border);
+  background: var(--bg-2);
+  color: var(--text);
 }
-.btn:hover{ filter:brightness(1.05) }
-.btn-ghost{ background:#141b27 }
-.btn-primary{ background:var(--accent); border-color:transparent; color:#fff }
+.btn:hover{ filter: brightness(1.05); }
+
+.btn-ghost{ background: var(--ghost); }
+.btn-primary{
+  background: var(--success);
+  border-color: color-mix(in oklab, var(--success) 60%, #000);
+  color: #08240f; /* contrast pe verde */
+}

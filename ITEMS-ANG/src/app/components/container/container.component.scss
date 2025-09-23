@@ -1,0 +1,36 @@
+:host{
+  /* variabile locale – moștenite de toți copiii */
+  --bg:#0e131a;
+  --panel:#121a25;
+  --panel-2:#0f1722;
+  --border:#1f2a37;
+  --muted:#8a95a6;
+  --text:#e7eefb;
+  --accent:#2f64ff;
+  --green:#45d483;
+
+  display:block;
+  min-height:100dvh;          /* ocupă toată înălțimea */
+  width:100%;
+  background:var(--bg);
+  color:var(--text);
+  font-family:Inter, system-ui, Segoe UI, Roboto, Arial, sans-serif;
+}
+
+/* “scoped reset” doar în interiorul containerului */
+.container-wrapper, .container-wrapper * {
+  box-sizing: border-box;
+}
+
+.container-wrapper{
+  min-height:100dvh;
+  display:flex;
+  justify-content:center;
+  align-items:flex-start;     /* conținutul începe de sus */
+  padding:24px 16px;
+  overflow:auto;              /* permite scroll în interior */
+}
+
+.main-content{
+  width:min(1280px, 100%);
+}

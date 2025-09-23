@@ -1,0 +1,34 @@
+:host{ display:block; }
+
+.page{ display:flex; flex-direction:column; gap:12px; }
+
+.page-header{
+  display:flex; align-items:center; justify-content:space-between;
+  margin: 8px 0 4px;
+  h1{ font-size:22px; font-weight:800; }
+}
+
+.actions{ display:flex; gap:10px; }
+
+/* Butoane – local pentru Home */
+.btn{
+  border:1px solid var(--border);
+  background:var(--panel-2);
+  color:var(--text);
+  padding:10px 14px;
+  border-radius:10px;
+  font-weight:600;
+  line-height:1;
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  cursor:pointer;
+  transition:filter .15s;
+}
+.btn:hover{ filter:brightness(1.06); }
+.btn-ghost{ background:#141b27; }
+.btn-primary{ background:var(--accent); border-color:transparent; color:#fff; }
+.btn.small{ padding:8px 10px; font-size:13px; }
+
+/* utilitar local */
+.muted{ color:var(--muted); }

@@ -1,0 +1,83 @@
+<div class="table-wrap">
+  <table class="grid">
+    <thead>
+      <tr>
+        <th style="width:34px;">
+          <input type="checkbox"
+                 [checked]="allChecked"
+                 [indeterminate]="anyChecked"
+                 (change)="toggleAll(($any($event.target)).checked)" />
+        </th>
+        <th>NAME</th>
+        <th>GAME</th>
+        <th>STATUS</th>
+        <th class="num">VIEWS</th>
+        <th class="num">PRICE</th>
+        <th>LAST UPDATED</th>
+        <th style="width:160px;"></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <ng-container *ngFor="let r of rows; trackBy: trackById">
+        <tr>
+          <td>
+            <input type="checkbox"
+                   [checked]="selected.has(r)"
+                   (change)="toggleRow(r, ($any($event.target)).checked)" />
+          </td>
+
+          <td>
+            <div class="title-cell">
+              <span class="game-icon">🧩</span>
+              <div class="title-block">
+                <div class="title">{{ r.name }}</div>
+              </div>
+            </div>
+          </td>
+
+          <td class="muted">{{ r.game }}</td>
+          <td>
+            <span class="badge"
+                  [class.ok]="r.status==='Active'"
+                  [class.draft]="r.status==='Draft'"
+                  [class.hid]="r.status==='Hidden'"
+                  [class.sold]="r.status==='Sold'">
+              {{ r.status }}
+            </span>
+          </td>
+          <td class="num">{{ r.views }}</td>
+          <td class="num">{{ r.price }}</td>
+          <td class="muted">{{ r.updated }}</td>
+
+          <td class="actions-td">
+            <button class="ico-btn edit" (click)="emit('edit', r)">✏️</button>
+            <button class="ico-btn promote" (click)="emit('promote', r)">★</button>
+            <button class="ico-btn view-img" (click)="toggleImage(r)">👁️</button>
+
+            <div class="menu-wrap" (click)="$event.stopPropagation()">
+              <button class="dot" (click)="toggleMenu(r, $event)">⋯</button>
+              <div class="menu" *ngIf="openMenuFor === r">
+                <button (click)="emit('view', r)">View Item</button>
+                <button class="danger" (click)="emit('delete', r)">Delete Item</button>
+              </div>
+            </div>
+          </td>
+        </tr>
+
+        <tr *ngIf="imageVisibleFor === r">
+          <td colspan="8" class="image-row">
+            <img [src]="r.imageUrl || ''" alt="Preview" />
+          </td>
+        </tr>
+      </ng-container>
+
+      <tr *ngIf="!rows?.length && !loading">
+        <td class="empty" colspan="8">No results</td>
+      </tr>
+      <tr *ngIf="loading">
+        <td class="empty" colspan="8">Loading…</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

@@ -1,0 +1,95 @@
+:host{ display:inline-block; }
+.filter-btn{ position:relative; display:inline-block; }
+
+/* CHIP */
+.chip{
+  display:inline-flex; align-items:center; justify-content:center;
+  height:40px;
+  padding:0 16px;
+  border-radius:12px;
+  background:#141b27;
+  border:1px solid #243044;
+  color:var(--text);
+  font-size:14px; font-weight:600;
+  cursor:pointer;
+  transition: filter .15s, border-color .15s, box-shadow .15s, transform .05s;
+}
+.chip:hover{ filter: brightness(1.08); border-color: var(--accent); }
+.chip:active{ transform: translateY(1px); }
+.chip.active{
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(47,100,255,.18);
+}
+.filter-btn.open .chip{
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(47,100,255,.22);
+}
+
+/* Panel */
+.panel{
+  position:absolute; top:calc(100% + 8px); left:0;
+  width:320px;
+  background:var(--panel-2);
+  border:1px solid var(--border);
+  border-radius:14px;
+  box-shadow:0 18px 50px rgba(0,0,0,.45);
+  z-index:1000; overflow:hidden;
+  animation: dropdownIn .14s ease-out;
+}
+@keyframes dropdownIn {
+  from { opacity:0; transform: translateY(-4px) scale(.98); }
+  to   { opacity:1; transform: translateY(0) scale(1); }
+}
+
+/* Search din panel */
+.panel-search{
+  display:flex; align-items:center; gap:10px;
+  padding:12px 14px;
+  border-bottom:1px solid var(--border);
+  background:var(--panel);
+}
+.panel-search input{
+  background:transparent; border:0; outline:0;
+  color:var(--text); width:100%; font-size:15px; line-height:22px; padding:6px 0;
+}
+.search-icon{ opacity:.8; }
+
+/* Opțiuni */
+.options{ max-height:340px; overflow:auto; padding:8px; }
+.opt{
+  display:flex; align-items:center; gap:12px;
+  padding:12px 14px;
+  border-radius:10px;
+  cursor:pointer; user-select:none;
+}
+.opt:hover{ background: rgba(20,27,39,.65); }
+.opt input{ margin:0; width:18px; height:18px; accent-color: var(--accent); }
+.opt-label{ flex:1; font-weight:600; letter-spacing:.2px; }
+.opt-count{ color:var(--muted); font-size:12px; }
+
+.empty{ color:var(--muted); padding:12px; text-align:center; }
+
+/* Footer */
+.panel-footer{
+  display:flex; justify-content:space-between; gap:8px;
+  padding:10px; border-top:1px solid var(--border); background:var(--panel);
+}
+.panel-footer .btn.small{
+  height:38px; padding:0 14px; font-weight:600;
+}
+
+/* butoane locale în panel */
+.btn{
+  border:1px solid var(--border);
+  background:var(--panel-2);
+  color:var(--text);
+  padding:10px 14px;
+  border-radius:10px;
+  font-weight:600;
+  line-height:1;
+  display:inline-flex; align-items:center; gap:8px;
+  cursor:pointer;
+}
+.btn:hover{ filter:brightness(1.05); }
+.btn-primary{ background:var(--accent); border-color:transparent; color:#fff; }
+.btn.small{ padding:8px 10px; font-size:13px; }

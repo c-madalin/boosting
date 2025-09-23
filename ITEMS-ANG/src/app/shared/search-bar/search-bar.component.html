@@ -1,1 +1,17 @@
-<p>search-bar works!</p>
+<div class="toolbar" (window:keydown)="focusWithSlash($event)">
+  <div class="search">
+    <span class="search-icon">🔎</span>
+    <input #searchInput
+           type="text"
+           [value]="term"
+           (input)="onKey(searchInput.value)"
+           placeholder="Search..." />
+    <kbd>/</kbd>
+  </div>
+
+  <div class="filters">
+    <ng-content select="[filters]"></ng-content>
+  </div>
+
+  <div class="toolbar-right"></div>
+</div>

@@ -1,1 +1,39 @@
-<p>filter-button works!</p>
+<div class="filter-btn" [class.open]="open">
+  <button type="button" class="chip"
+          [class.active]="selectedCount>0"
+          (click)="toggleOpen()"
+          [attr.aria-expanded]="open"
+          aria-haspopup="listbox">
+    {{ label }} <span *ngIf="selectedCount">({{selectedCount}})</span>
+  </button>
+
+  <div class="panel" *ngIf="open" (click)="$event.stopPropagation()">
+    <div class="panel-search">
+      <span class="search-icon">🔎</span>
+      <input type="text"
+             [value]="q"
+             (input)="q = ($any($event.target)).value"
+             [placeholder]="'Search ' + label.replace('+ ','')" />
+    </div>
+
+    <div class="options" role="listbox">
+      <label class="opt" *ngFor="let o of filteredOptions()">
+        <ng-container *ngIf="multiple; else single">
+          <input type="checkbox" [checked]="isSelected(o.value)" (change)="onOptionToggle(o.value)" />
+        </ng-container>
+        <ng-template #single>
+          <input type="radio" name="{{label}}" [checked]="isSelected(o.value)" (change)="onOptionToggle(o.value)" />
+        </ng-template>
+        <span class="opt-label">{{ o.label || o.value }}</span>
+        <span class="opt-count" *ngIf="o.count !== undefined">{{ o.count }}</span>
+      </label>
+
+      <div class="empty" *ngIf="filteredOptions().length === 0">No results</div>
+    </div>
+
+    <div class="panel-footer">
+      <button class="btn small" (click)="clear($event)">Clear</button>
+      <button class="btn btn-primary small" (click)="close()">Done</button>
+    </div>
+  </div>
+</div>

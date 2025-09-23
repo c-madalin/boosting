@@ -1,0 +1,72 @@
+:host { display:block; height:100%; }
+
+.table-wrap {
+  border: 1px solid var(--border);
+  background: rgba(18, 25, 37, 0.65);
+  backdrop-filter: blur(4px);
+  border-radius: 12px;
+  overflow: auto;
+  height: 100%;
+}
+
+/* ascunde scrollbars */
+.table-wrap{ scrollbar-width:none; -ms-overflow-style:none; }
+.table-wrap::-webkit-scrollbar{ width:0; height:0; }
+
+.grid { width:100%; border-collapse:separate; border-spacing:0; font-size:14px; }
+
+.grid thead th {
+  text-align:left; font-weight:700; font-size:12px; letter-spacing:.6px;
+  color:var(--muted); background:#0f1722; border-bottom:1px solid var(--border);
+  padding:12px 14px; position:sticky; top:0; z-index:1;
+}
+
+.grid tbody td { border-bottom:1px solid #162033; padding:14px; vertical-align:middle; }
+.grid tbody tr:hover { background: rgba(20,27,39,.65); }
+
+/* celule */
+.title-cell { display:flex; align-items:center; gap:10px; }
+.game-icon { font-size:20px; }
+.title-block .title { font-weight:600; color:#eaf1ff; }
+
+.muted { color:var(--muted); }
+.num { text-align:right; white-space:nowrap; }
+
+.badge{
+  display:inline-block; padding:6px 10px; border-radius:8px;
+  background:#2a3547; border:1px solid #2b3a52; color:#b9c7dd; font-weight:600; font-size:12px;
+}
+.badge.ok{    background:#1f3b2a; border-color:#2d523f; color:var(--green); }
+.badge.draft{ background:#1a2230; border-color:#2b3a52; }
+.badge.hid{   background:#141b27; border-color:#243044; }
+.badge.sold{  background:#241716; border-color:#52322d; color:#ffb4a6; }
+
+.actions-td { text-align:right; white-space:nowrap; }
+.ico-btn{
+  background:#0f1622; border:1px solid var(--border); color:#c6d2e6;
+  border-radius:8px; height:34px; padding:0 10px; margin-right:6px; cursor:pointer; font-weight:600;
+}
+.ico-btn.edit{ border-color:#2b3a52; }
+.ico-btn.promote{ border-color:#2b3a52; background:#171e2b; }
+
+/* ⋯ meniu */
+.menu-wrap{ display:inline-block; position:relative; }
+.dot{
+  background:#0f1622; border:1px solid var(--border); color:#c6d2e6;
+  border-radius:8px; width:34px; height:34px; line-height:32px; text-align:center; cursor:pointer;
+}
+.menu{
+  position:absolute; right:0; top:40px; min-width:200px; background:#0f1722;
+  border:1px solid var(--border); border-radius:10px; box-shadow:0 10px 30px rgba(0,0,0,.35);
+  padding:6px; z-index:10;
+}
+.menu > button{
+  display:block; width:100%; text-align:left; padding:10px 12px; border:0;
+  background:transparent; color:#e7eefb; border-radius:8px; cursor:pointer;
+}
+.menu > button:hover{ background:rgba(255,255,255,.06); }
+.menu > button.danger{ color:#ff9e9e; }
+
+.image-row img{
+  max-width:100%; max-height:300px; display:block; margin:10px auto; border-radius:8px;
+}

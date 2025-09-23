@@ -19,8 +19,6 @@
     <!-- slot filtre -->
     <app-filter-button filters label="+ Game" [options]="gameOptions" [selected]="filters.game" (selectedChange)="setFilter('game', $event)"></app-filter-button>
     <app-filter-button filters label="+ Status" [options]="statusOptions" [selected]="filters.status" (selectedChange)="onStatusChange($event)"></app-filter-button>
-    <app-filter-button filters label="+ Rating" [options]="ratingOptions" [selected]="filters.rating" (selectedChange)="onRatingChange($event)"></app-filter-button>
-    <app-filter-button filters label="+ Server" [options]="serverOptions" [selected]="filters.server" (selectedChange)="setFilter('server', $event)"></app-filter-button>
     <app-filter-button filters label="+ Discounted" [options]="[{ value:'yes', label:'Discounted only' }]" [multiple]="false" [selected]="filters.discounted ? ['yes'] : []" (selectedChange)="setFilter('discounted', $event.includes('yes'))"></app-filter-button>
     <app-filter-button filters label="+ Date" [options]="dateOptions" [multiple]="false" [selected]="datePreset" (selectedChange)="onDatePresetChange($event)"></app-filter-button>
   </app-search-bar>

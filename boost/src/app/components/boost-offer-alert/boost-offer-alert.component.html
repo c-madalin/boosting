@@ -5,6 +5,7 @@
   </header>
 
   <section class="card__body">
+    <!-- stânga: detalii sub Game -->
     <div class="details">
       <div class="row"><span>Current Rank:</span> <strong>{{ offer.currentRank }}</strong></div>
       <div class="row"><span>Rank Desired:</span> <strong>{{ offer.desiredRank }}</strong></div>
@@ -12,17 +13,18 @@
       <div class="row"><span>Platform:</span>     <strong>{{ offer.platform }}</strong></div>
     </div>
 
-    <div class="notes">
-      <div class="label">Additional Comments</div>
-      <div class="box">{{ offer.notes || '—' }}</div>
-    </div>
-
+    <!-- dreapta-jos: price stack -->
     <div class="price-stack">
-      <div class="chip" *ngIf="offer.sectionLabel">{{ offer.sectionLabel }}</div>
       <div class="price-card">
         <div class="price-label">Price:</div>
         <div class="price-value">{{ offer.priceUSD }}$</div>
       </div>
+    </div>
+
+    <!-- rândul 2 pe toată lățimea -->
+    <div class="notes">
+      <div class="label">Additional Comments</div>
+      <div class="box">{{ offer.notes || '—' }}</div>
     </div>
   </section>
 

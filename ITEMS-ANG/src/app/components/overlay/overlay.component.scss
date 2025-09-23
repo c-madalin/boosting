@@ -6,21 +6,21 @@
   z-index: 10000;
   display: grid;
   place-items: center;
-  padding: 24px;               /* un pic de padding pt. ecrane mici */
+  padding: 24px;
+  overflow: hidden;                 /* 🔒 nu arăta scroll pe overlay */
 }
 
-/* cutia din centru */
 .overlay__content {
   position: relative;
-  width: min(900px, 92vw);     /* latime responsive */
-  max-height: 90vh;            /* ca sa nu iasa in afara */
-  overflow: auto;              /* scroll intern daca e cazul */
-  background: #0f1722;         /* panel dark */
-  border: 1px solid #1f2a37;   /* border subtil */
-  border-radius: 16px;
-  box-shadow: 0 12px 30px rgba(0,0,0,.4);
-  padding: 20px;
+  width: min(900px, 92vw);
+  /* max-height: 90vh;  */          /* ❌ scoate limita aici */
+  overflow: visible;                /* ✅ fara scroll pe content */
+  background: transparent;          /* opțional, dacă vrei invizibil */
+  border: 0;
+  box-shadow: none;
+  padding: 0;                       /* panelul tău are deja padding */
 }
+
 
 /* buton inchidere */
 .overlay__close {

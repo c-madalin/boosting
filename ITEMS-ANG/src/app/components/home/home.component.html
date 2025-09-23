@@ -30,4 +30,14 @@
     (selectionChange)="onSelectionChange($event)"
     (rowAction)="onRowAction($event)">
   </app-items-table>
+  <!-- formularul de creare item listing -->
+
+
+<app-overlay *ngIf="showNewListing" (close)="closeNewListing()">
+  <app-item-listing
+    [categories]="categories"
+    [feePercent]="10"
+    (submitted)="onListingSubmitted($event)">
+  </app-item-listing>
+</app-overlay>
 </div>

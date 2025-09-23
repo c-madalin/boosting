@@ -4,6 +4,8 @@ import { CommonModule } from '@angular/common';
 import { SearchBarComponent } from '../../shared/search-bar/search-bar.component';
 import { FilterButtonComponent, FilterOption } from '../../shared/filter-button/filter-button.component';
 import { ItemRow, ItemsTableComponent } from '../../shared/items-table/items-table.component';
+import { ItemListingComponent } from "../item-listing/item-listing.component";
+import { OverlayComponent } from "../overlay/overlay.component";
 
 interface FiltersState {
   q: string;
@@ -18,7 +20,7 @@ interface FiltersState {
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, SearchBarComponent, FilterButtonComponent, ItemsTableComponent],
+  imports: [CommonModule, SearchBarComponent, FilterButtonComponent, ItemsTableComponent, ItemListingComponent, OverlayComponent],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
@@ -124,5 +126,29 @@ export class HomeComponent {
   // pentru (viewClick) din <app-search-bar>
   onViewClick() {
     console.log('view clicked');
+  }
+  onListingSubmitted(data: any) {
+  console.log('New item listing created:', data);
+
+  // aici poți face:
+  // - salvare în backend
+  // - adăugare la lista locală
+  this.rows = [
+    ...this.rows,
+    {
+      id: this.rows.length + 1,
+      name: data.title,
+      game: data.category,
+      status: 'Draft',
+      views: 0,
+      price: `€${data.price}`,
+      updated: 'just now'
+    }
+  ];
+
+  this.closeNewListing(); // ascundem formularul
+}
+ get categories(): string[] {
+    return this.gameOptions.map(o => o.value);
   }
 }

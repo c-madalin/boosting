@@ -1,0 +1,39 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(10px) saturate(120%);
+  z-index: 10000;
+  display: grid;
+  place-items: center;
+  padding: 24px;               /* un pic de padding pt. ecrane mici */
+}
+
+/* cutia din centru */
+.overlay__content {
+  position: relative;
+  width: min(900px, 92vw);     /* latime responsive */
+  max-height: 90vh;            /* ca sa nu iasa in afara */
+  overflow: auto;              /* scroll intern daca e cazul */
+  background: #0f1722;         /* panel dark */
+  border: 1px solid #1f2a37;   /* border subtil */
+  border-radius: 16px;
+  box-shadow: 0 12px 30px rgba(0,0,0,.4);
+  padding: 20px;
+}
+
+/* buton inchidere */
+.overlay__close {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  appearance: none;
+  border: 0;
+  background: transparent;
+  font-size: 20px;
+  line-height: 1;
+  cursor: pointer;
+  color: #e7eefb;
+  opacity: .7;
+}
+.overlay__close:hover { opacity: 1; }

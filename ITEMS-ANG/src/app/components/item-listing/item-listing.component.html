@@ -1,0 +1,124 @@
+<div class="item-listing">
+  <div class="panel">
+    <!-- HEADER -->
+    <div class="header">
+      <h3>Create Item Offer</h3>
+    </div>
+
+    <form [formGroup]="form" class="body">
+      <!-- MAIN INFO -->
+      <section class="card">
+        <h4>Main Item Info</h4>
+
+        <div class="grid-2">
+          <div class="col">
+            <label>Item Title</label>
+            <input type="text" formControlName="title" placeholder="Short Item Title" />
+            <small>Dashes will be converted to interpuncs</small>
+          </div>
+
+          <div class="col">
+            <label>Slug (URI)</label>
+            <input type="text" formControlName="slug" placeholder="URI" />
+            <small>This will be used in the URL</small>
+          </div>
+
+          <div class="col">
+            <label>Price per unit</label>
+            <div class="price-row">
+              <span class="symbol">{{ currencySymbol }}</span>
+              <input type="number" min="0.01" step="0.01" formControlName="price" />
+              <select class="currency" formControlName="currency">
+                <option *ngFor="let c of currencyOptions" [value]="c">{{ c }}</option>
+              </select>
+            </div>
+            <small>You will get {{ currencySymbol }}{{ sellerGets | number:'1.0-2' }}</small>
+          </div>
+
+          <div class="col">
+            <label>Game</label>
+            <div class="select-wrap">
+              <select formControlName="game">
+                <option value="" disabled selected>Select Game</option>
+                <option *ngFor="let g of categories" [value]="g">{{ g }}</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="col full">
+            <label>Item Image</label>
+            <label class="drop">
+              <input type="file" accept=".png,.jpg,.jpeg,.webp,.gif" (change)="onFileChange($event)" />
+              <span class="plus">+</span>
+              <div class="drop-text">
+                <strong>Select or drag files</strong>
+                <span>| PNG, JPEG, WEBP, GIF | &lt; 4.88MB</span>
+              </div>
+            </label>
+          </div>
+
+          <div class="col full">
+            <label>Description</label>
+            <textarea rows="3" formControlName="description" placeholder="Short Item Description"></textarea>
+          </div>
+        </div>
+      </section>
+
+      <!-- GAME SPECIFIC DATA -->
+      <section class="card">
+        <h4>Game Specific Data</h4>
+        <div class="grid-2">
+          <div class="col">
+            <label>Item Type</label>
+            <select formControlName="itemType">
+              <option value="" disabled selected>Select Item Type</option>
+              <option *ngFor="let t of itemTypes" [value]="t">{{ t }}</option>
+            </select>
+          </div>
+        </div>
+      </section>
+
+      <!-- STOCK -->
+      <section class="card">
+        <h4>Item Stock</h4>
+        <div class="grid-2">
+          <div class="col">
+            <label>Stock</label>
+            <input type="number" min="1" formControlName="stock" />
+          </div>
+          <div class="col">
+            <label>Minimum Quantity</label>
+            <input type="number" min="1" formControlName="minQty" />
+          </div>
+
+          <div class="col">
+            <label>Delivery Time</label>
+            <div class="row-2">
+              <input type="number" min="1" formControlName="deliveryTime" />
+              <select formControlName="deliveryTimeUnit">
+                <option>Minutes</option>
+                <option>Hours</option>
+                <option>Days</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="col full mt-12">
+          <div class="hdr">
+            <label>Delivery Instructions</label>
+            <span class="opt">Optional</span>
+          </div>
+          <textarea rows="4" formControlName="deliveryInstructions"
+            placeholder="Extra information for the buyer; they will see this after purchase."></textarea>
+        </div>
+      </section>
+    </form>
+
+    <!-- FOOTER -->
+    <div class="footer">
+      <button type="button" class="btn ghost" (click)="cancel()">Cancel</button>
+      <button type="button" class="btn primary" [disabled]="form.invalid" (click)="submit()">Create Item</button>
+    </div>
+  </div>
+</div>

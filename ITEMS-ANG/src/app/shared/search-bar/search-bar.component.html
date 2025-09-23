@@ -1,17 +1,19 @@
-<div class="toolbar" (window:keydown)="focusWithSlash($event)">
-  <div class="search">
-    <span class="search-icon">🔎</span>
-    <input #searchInput
-           type="text"
-           [value]="term"
-           (input)="onKey(searchInput.value)"
-           placeholder="Search..." />
-    <kbd>/</kbd>
-  </div>
+<div class="shell">
+  <div class="row">
+    <div class="input-wrap">
+      <span class="icon" aria-hidden="true">🔍</span>
+      <input
+        type="text"
+        [value]="value"
+        (input)="emitChange($any($event.target).value)"
+        placeholder="Search..."
+        aria-label="Search"
+      />
+      <kbd class="kbd">/</kbd>
+    </div>
 
-  <div class="filters">
-    <ng-content select="[filters]"></ng-content>
+    <div class="filters">
+      <ng-content></ng-content>
+    </div>
   </div>
-
-  <div class="toolbar-right"></div>
 </div>

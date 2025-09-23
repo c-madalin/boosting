@@ -1,10 +1,11 @@
 <div class="item-listing">
   <div class="panel">
-    <!-- HEADER -->
+    <!-- HEADER FIX -->
     <div class="header">
       <h3>Create Item Offer</h3>
     </div>
 
+    <!-- CORP CU SCROLL (ascuns vizual) -->
     <form [formGroup]="form" class="body">
       <!-- MAIN INFO -->
       <section class="card">
@@ -14,13 +15,13 @@
           <div class="col">
             <label>Item Title</label>
             <input type="text" formControlName="title" placeholder="Short Item Title" />
-            <small>Dashes will be converted to interpuncs</small>
+            <small class="hint">Dashes will be converted to interpuncs</small>
           </div>
 
           <div class="col">
             <label>Slug (URI)</label>
             <input type="text" formControlName="slug" placeholder="URI" />
-            <small>This will be used in the URL</small>
+            <small class="hint">This will be used in the URL</small>
           </div>
 
           <div class="col">
@@ -28,21 +29,16 @@
             <div class="price-row">
               <span class="symbol">{{ currencySymbol }}</span>
               <input type="number" min="0.01" step="0.01" formControlName="price" />
-              <select class="currency" formControlName="currency">
-                <option *ngFor="let c of currencyOptions" [value]="c">{{ c }}</option>
-              </select>
             </div>
-            <small>You will get {{ currencySymbol }}{{ sellerGets | number:'1.0-2' }}</small>
+            <small class="hint">You will get {{ currencySymbol }}{{ sellerGets | number:'1.0-2' }}</small>
           </div>
 
           <div class="col">
             <label>Game</label>
-            <div class="select-wrap">
-              <select formControlName="game">
-                <option value="" disabled selected>Select Game</option>
-                <option *ngFor="let g of categories" [value]="g">{{ g }}</option>
-              </select>
-            </div>
+            <select formControlName="game">
+              <option value="" disabled selected>Select Game</option>
+              <option *ngFor="let g of categories" [value]="g">{{ g }}</option>
+            </select>
           </div>
 
           <div class="col full">
@@ -104,7 +100,7 @@
           </div>
         </div>
 
-        <div class="col full mt-12">
+        <div class="col full mt-16">
           <div class="hdr">
             <label>Delivery Instructions</label>
             <span class="opt">Optional</span>
@@ -115,7 +111,7 @@
       </section>
     </form>
 
-    <!-- FOOTER -->
+    <!-- FOOTER FIX -->
     <div class="footer">
       <button type="button" class="btn ghost" (click)="cancel()">Cancel</button>
       <button type="button" class="btn primary" [disabled]="form.invalid" (click)="submit()">Create Item</button>

@@ -1,4 +1,4 @@
-:host { display:block; }
+:host{ display:block; }
 
 /* card tabel */
 .table-wrap {
@@ -8,39 +8,38 @@
   border-radius: 14px;
   overflow:auto;
 }
-
 /* ascunde scrollbars doar pe tabel */
 .table-wrap{ scrollbar-width:none; -ms-overflow-style:none; }
 .table-wrap::-webkit-scrollbar{ width:0; height:0; }
 
-.grid { width:100%; border-collapse:separate; border-spacing:0; font-size:15px; } /* ↑ */
+.grid { width:100%; border-collapse:separate; border-spacing:0; font-size:15px; }
 
 .grid thead th {
   text-align:left; font-weight:800; font-size:12.5px; letter-spacing:.6px;
   color:var(--muted); background:#0f1722; border-bottom:1px solid var(--border);
   padding:14px 16px; position:sticky; top:0; z-index:1;
 }
+.grid thead th.date{ text-align:left; }
 
-.grid tbody td { border-bottom:1px solid #162033; padding:16px; vertical-align:middle; } /* ↑ */
+.grid tbody td { border-bottom:1px solid #162033; padding:16px; vertical-align:middle; }
 .grid tbody tr:hover { background: rgba(20,27,39,.6); }
 
 /* celule */
-.title-cell { display:flex; align-items:center; gap:12px; } /* ↑ */
-.game-icon { font-size:22px; }
-.title-block .title { font-weight:700; color:#eaf1ff; font-size:15.5px; } /* ↑ */
-
+.title-cell { display:flex; align-items:center; gap:12px; }
+.game-icon { font-size:20px; }
+.title { font-weight:700; color:#eaf1ff; font-size:15.5px; }
 .muted { color:var(--muted); }
-.num { text-align:right; white-space:nowrap; font-variant-numeric: tabular-nums; }
+.date { white-space:nowrap; }
 
 /* status badge */
 .badge{
   display:inline-block; padding:7px 12px; border-radius:10px;
-  background:#2a3547; border:1px solid #2b3a52; color:#b9c7dd; font-weight:700; font-size:12.5px;
+  background:#2a3547; border:1px solid #2b3a52; color:#b9c7dd; font-weight:700; font-size:12.5px; text-transform:capitalize;
 }
-.badge.ok{    background:#183524; border-color:#2d523f; color:var(--green); }
-.badge.draft{ background:#1a2230; border-color:#2b3a52; }
-.badge.hid{   background:#141b27; border-color:#243044; }
-.badge.sold{  background:#241716; border-color:#52322d; color:#ffb4a6; }
+.badge.prog  { background:#183524; border-color:#2d523f; color:var(--green); }
+.badge.done  { background:#172330; border-color:#28445f; color:#8fd1ff; }
+.badge.cancel{ background:#2a1717; border-color:#52322d; color:#ffb4a6; }
+.badge.wait  { background:#302b17; border-color:#5a5128; color:#ffd88a; }
 
 /* acțiuni */
 .actions-td { text-align:right; white-space:nowrap; }
@@ -48,10 +47,6 @@
   background:#0f1622; border:1px solid var(--border); color:#c6d2e6;
   border-radius:10px; height:36px; padding:0 12px; margin-right:8px; cursor:pointer; font-weight:700;
 }
-.ico-btn.edit{ border-color:#2b3a52; }
-.ico-btn.promote{ border-color:#2b3a52; background:#171e2b; }
-
-/* ⋯ meniu */
 .menu-wrap{ display:inline-block; position:relative; }
 .dot{
   background:#0f1622; border:1px solid var(--border); color:#c6d2e6;
@@ -69,6 +64,4 @@
 .menu > button:hover{ background:rgba(255,255,255,.06); }
 .menu > button.danger{ color:#ff9e9e; }
 
-.image-row img{
-  max-width:100%; max-height:360px; display:block; margin:12px auto; border-radius:10px;
-}
+.empty{ text-align:center; padding:30px !important; color:var(--muted); }

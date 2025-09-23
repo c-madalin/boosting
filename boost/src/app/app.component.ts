@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { BoostMainContainerComponent } from "./component/boost-main-container/boost-main-container.component";
+import { BoostMainContainerComponent } from "./components/boost-main-container/boost-main-container.component";
 
 @Component({
   selector: 'app-root',

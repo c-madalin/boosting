@@ -1,0 +1,101 @@
+:host{ display:block; width:100% }
+
+/* card-ul central */
+.card{
+  width:100%;
+  background: color-mix(in oklab, var(--panel-2) 88%, transparent);
+  border:1px solid var(--border);
+  border-radius:16px;
+  overflow:hidden;
+  box-shadow: 0 10px 30px rgba(0,0,0,.35);
+  display:flex; flex-direction:column;
+}
+
+/* header */
+.card__header{
+  padding:20px 22px 6px;
+  border-bottom:1px solid color-mix(in oklab, var(--border) 70%, transparent);
+}
+.card__title{
+  text-align:center;
+  font-weight:700;
+  font-size:20px;
+  margin-bottom:8px;
+}
+.card__game{
+  font-size:16px;
+  opacity:.9;
+}
+
+/* corp */
+.card__body{
+  display:grid;
+  grid-template-columns: 1fr auto; /* info + stiva de preț */
+  gap:24px;
+  padding:20px 22px;
+}
+.details{
+  display:flex; flex-direction:column; gap:8px;
+}
+.row{
+  display:flex; gap:8px; align-items:baseline;
+  font-size:15px;
+}
+.row span{ color:var(--muted) }
+
+.notes{
+  grid-column: 1 / -1;
+  display:flex; flex-direction:column; gap:8px; margin-top:12px;
+}
+.notes .label{ color:var(--muted); font-size:14px }
+.notes .box{
+  min-height:64px;
+  border:1px dashed var(--border);
+  border-radius:10px;
+  padding:10px 12px;
+  background: #0f141b80;
+}
+
+/* preț */
+.price-stack{
+  grid-row: 1 / 3;
+  display:flex; flex-direction:column; gap:10px; align-items:flex-end;
+}
+.chip{
+  background:#1a2230; border:1px solid #243044;
+  color:var(--text); padding:6px 10px; border-radius:10px; font-size:12px; font-weight:600;
+}
+.price-card{
+  min-width:210px;
+  background:#2a3547;
+  border:1px solid #2b3a52;
+  border-radius:12px;
+  padding:14px 18px;
+  display:flex; justify-content:space-between; align-items:center; gap:18px;
+}
+.price-label{ color:#b9c7dd; font-weight:600 }
+.price-value{ font-weight:800; font-size:18px }
+
+/* footer cu 3 butoane egal distanțate */
+.card__footer{
+  display:grid; grid-template-columns: 1fr 1fr 1fr; gap:10px;
+  border-top:1px solid color-mix(in oklab, var(--border) 70%, transparent);
+  padding:12px;
+}
+.btn{
+  border:1px solid var(--border);
+  background:var(--panel-2);
+  color:var(--text);
+  padding:12px 14px;
+  border-radius:10px;
+  font-weight:700;
+  line-height:1;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  cursor:pointer;
+}
+.btn:hover{ filter:brightness(1.05) }
+.btn-ghost{ background:#141b27 }
+.btn-primary{ background:var(--accent); border-color:transparent; color:#fff }

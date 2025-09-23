@@ -1,3 +1,9 @@
-<div class="main">
-
-</div>
+<!-- containerul aplicației tale; Overlay-ul centrează cardul -->
+<app-overlay [open]="show" (backdropClick)="close()">
+  <app-boost-offer-alert
+    [offer]="offer"
+    (decline)="onDecline()"
+    (counter)="onCounter()"
+    (accept)="onAccept()"
+  />
+</app-overlay>

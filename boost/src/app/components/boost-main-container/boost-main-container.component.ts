@@ -16,12 +16,12 @@ export class BoostMainContainerComponent {
   show = true;
 
   offer: BoostOffer = {
-    gameName: 'Nume joc',
+    gameName: 'Valorant',
     currentRank: 'Gold II',
     desiredRank: 'Platinum I',
     currentRP: '2450',
     platform: 'PC',
-    notes: 'Clientul vrea livrare seara după 20:00. Fără voice.',
+    notes: 'Negociabil frate ',
     priceUSD: 100,
     sectionLabel: 'Section 1',
   };

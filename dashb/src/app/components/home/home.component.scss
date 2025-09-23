@@ -1,53 +1,22 @@
 :host{ display:block; }
+.page{ display:flex; flex-direction:column; gap:18px; }
+.page-header{ display:flex; align-items:center; justify-content:space-between; }
+.page-header h1{ font-size:28px; font-weight:800; letter-spacing:.2px; }
+.actions{ display:flex; gap:14px; }
 
-.page{
-  width:100%;
-  display:flex;
-  flex-direction:column;
-  gap:18px;
-}
-
-.page-header{
-  display:flex; align-items:center; justify-content:space-between;
-  h1{ font-size:28px; font-weight:800; letter-spacing:.2px; }
-}
-
-.actions{ display:flex; align-items:center; gap:14px; }
-
-/* buton clopoțel */
-.btn{
-  border:1px solid var(--border);
-  background:var(--panel-2);
-  color:var(--text);
-  padding:10px 14px;
-  border-radius:14px;
-  font-weight:700;
-  display:inline-flex; align-items:center; gap:10px;
-  cursor:pointer; transition:filter .15s, transform .05s;
-}
-.btn:hover{ filter:brightness(1.06); }
-.btn:active{ transform: translateY(1px); }
-.btn.bell i{ font-size:16px; line-height:0; }
-.btn.bell.active{ background:var(--green); color:#05140c; border-color:#235a3d; }
-
-/* switch Get Boosting Offers */
-.switch{
-  position:relative; display:inline-flex; align-items:center; gap:10px; cursor:pointer;
-  background:transparent; padding:4px 0;
-}
+/* switch simplu */
+.switch{ display:inline-flex; align-items:center; gap:8px; cursor:pointer; }
 .switch input{ display:none; }
-.switch .slider{
-  width:46px; height:26px; border-radius:20px; background:#243043; border:1px solid var(--border); position:relative;
-  transition:background .2s, border-color .2s;
+.slider{
+  width:38px; height:20px;
+  background:#444; border-radius:20px;
+  position:relative; transition:.2s;
 }
-.switch .slider::after{
-  content:''; position:absolute; top:2px; left:2px; width:22px; height:22px; border-radius:50%;
-  background:#c6d2e6; transition:transform .2s;
+.slider::after{
+  content:""; position:absolute; top:2px; left:2px;
+  width:16px; height:16px; border-radius:50%;
+  background:white; transition:.2s;
 }
-.switch input:checked + .slider{
-  background:var(--green); border-color:#235a3d;
-}
-.switch input:checked + .slider::after{
-  transform: translateX(20px);
-}
-.switch .label{ color:var(--text); font-weight:700; user-select:none; }
+input:checked + .slider{ background:#2bb673; }
+input:checked + .slider::after{ transform:translateX(18px); }
+.label{ font-size:14px; color:var(--text,#e7eefb); }

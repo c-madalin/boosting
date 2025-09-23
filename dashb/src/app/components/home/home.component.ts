@@ -1,96 +1,103 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 import { SearchBarComponent } from '../../shared/search-bar/search-bar.component';
 import { FilterButtonComponent, FilterOption } from '../../shared/filter-button/filter-button.component';
-import { BoostingTableComponent, BoostRow, BoostType } from '../../shared/boosting-table/boosting-table.component';
+import { BoostingTableComponent, ItemRow } from '../../shared/boosting-table/boosting-table.component';
+import { OverlayComponent } from '../overlay/overlay.component';
+import { BoostOfferAlertComponent } from '../boost-offer-alert/boost-offer-alert.component';
 
-interface FiltersState {
-  q: string;
-  type: BoostType[];       // singurul filtru cerut
-  datePreset: string[];    // pentru mini-dashboard perioada (stub)
-}
+import { BoostOffer } from '../../types/boost-offer.model';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, SearchBarComponent, FilterButtonComponent, BoostingTableComponent],
+  imports: [
+    CommonModule,
+    FormsModule,
+    SearchBarComponent,
+    FilterButtonComponent,
+    BoostingTableComponent,
+    OverlayComponent,
+    BoostOfferAlertComponent
+  ],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent {
-
-  // --- MOCK DATA (boosting orders) ---
-  private allRows: BoostRow[] = [
-    { id: 101, name:'Duo Queue — Gold II → Plat IV', game:'Valorant', type:'order in progress',   date:'2 hours ago' },
-    { id: 102, name:'Solo — Silver → Gold',          game:'League of Legends', type:'waiting for payment', date:'yesterday' },
-    { id: 103, name:'Coaching 1h',                   game:'CS2',     type:'order completed',     date:'2025-09-20 14:32' },
-    { id: 104, name:'Duo Queue — Bronze → Silver',   game:'Apex',    type:'order canceled',      date:'2025-09-18' },
-    { id: 105, name:'Placement 5 matches',           game:'Valorant',type:'order in progress',   date:'3 days ago' },
+  // mock rows
+  private allRows: ItemRow[] = [
+    { id:1, name:'Duo Queue — Gold II → Plat IV', game:'Valorant',          status:'Active', views:312, price:'$100',  updated:'2 hours ago' },
+    { id:2, name:'Solo — Silver → Gold',          game:'League of Legends', status:'Draft',  views: 88,  price:'$85',   updated:'yesterday' },
+    { id:3, name:'Coaching 1h',                   game:'CS2',               status:'Hidden', views:145,  price:'€20/h', updated:'3 days ago' },
   ];
-  rows: BoostRow[] = [...this.allRows];
+  rows: ItemRow[] = [...this.allRows];
 
-  // --- state filtre ---
-  filters: FiltersState = {
-    q: '',
-    type: [],
-    datePreset: []
-  };
+  // map cu detaliile pentru overlay
+  private offersById = new Map<number | string, BoostOffer>([
+    [1, { gameName: 'Valorant', currentRank: 'Gold II', desiredRank: 'Platinum I', currentRP: '2450', platform: 'PC', notes: 'Prefer evening session. Can start now.', priceUSD: 100, sectionLabel: 'Section 1' }],
+    [2, { gameName: 'League of Legends', currentRank: 'Silver I', desiredRank: 'Gold IV', currentRP: '0', platform: 'PC', notes: 'Client wants fast queue times.', priceUSD: 85, sectionLabel: 'Section 1' }],
+    [3, { gameName: 'CS2', currentRank: '—', desiredRank: '—', currentRP: '—', platform: 'PC', notes: 'Hourly coaching / plays.', priceUSD: 20, sectionLabel: 'Coaching' }],
+  ]);
 
-  // opțiuni filtru Status (un singur buton)
-  typeOptions: FilterOption[] = [
-    { value:'order in progress', label:'In progress' },
-    { value:'order completed',   label:'Completed' },
-    { value:'order canceled',    label:'Canceled' },
-    { value:'waiting for payment', label:'Waiting payment' },
+  // state filtre
+  filters = { q: '', status: [] as string[], datePreset: [] as string[] };
+  statusOptions: FilterOption[] = [
+    { value:'Active' }, { value:'Draft' }, { value:'Hidden' }, { value:'Sold' }
   ];
-
-  // preset perioadă (mini-dashboard – rămâne stub pentru moment)
   dateOptions: FilterOption[] = [
+    { value:'24h', label:'Last 24 hours' },
     { value:'7d',  label:'Last 7 days'  },
     { value:'30d', label:'Last 30 days' },
     { value:'all', label:'All time'     },
   ];
   datePreset: string[] = [];
 
-  // notificări / oferte
-  notificationsOn = false;
-  getOffersOn = true;
+  // switch pentru Get Boosting Offers
+  offersEnabled = true;
 
-  // === handlers ===
+  // overlay state
+  showOffer = false;
+  selectedOffer: BoostOffer | null = null;
+
+  // handlers search / filtre
   onSearch(term: string){ this.filters.q = term; this.applyFilters(); }
-  onTypeChange(v: string[]){ this.filters.type = v as BoostType[]; this.applyFilters(); }
+  onStatusChange(v: string[]){ this.filters.status = v; this.applyFilters(); }
   onDatePresetChange(v: string[]){ this.datePreset = v; this.filters.datePreset = v; this.applyFilters(); }
+  onViewClick(){ console.log('viewClick triggered'); }
 
   private applyFilters(){
     const f = this.filters;
     const q = f.q.trim().toLowerCase();
-
     let list = [...this.allRows];
 
-    if (q) {
-      list = list.filter(r =>
-        r.name.toLowerCase().includes(q) ||
-        r.game.toLowerCase().includes(q) ||
-        String(r.id).includes(q)
-      );
-    }
-    if (f.type.length) list = list.filter(r => f.type.includes(r.type));
-
-    // demo pentru preset perioadă (poți conecta la date reale ulterior)
+    if (q) list = list.filter(r => r.name.toLowerCase().includes(q) || r.game.toLowerCase().includes(q));
+    if (f.status.length) list = list.filter(r => f.status.includes(r.status));
     if (f.datePreset[0] && f.datePreset[0] !== 'all') {
-      list = list.filter(r => r.date.includes('day') || r.date.includes('hour') || r.date.includes('yesterday'));
+      list = list.filter(r => r.updated.includes('day') || r.updated.includes('hour'));
     }
 
     this.rows = list;
   }
 
-  // tabel actions
-  onSelectionChange(_rows: BoostRow[]) {}
-  onRowAction(e: { action: string; row: BoostRow }) {
-    console.log('Row action:', e.action, e.row);
+  // tabel row actions
+  onRowAction(e: { action:'view'|'edit'|'delete'|'promote'; row: ItemRow }) {
+    if (e.action === 'view') {
+      const offer = this.offersById.get(e.row.id ?? '');
+      if (offer) {
+        this.selectedOffer = offer;
+        this.showOffer = true;
+      }
+    }
+    if (e.action === 'delete') {
+      this.rows = this.rows.filter(r => r !== e.row);
+    }
   }
 
-  toggleNotifications(){ this.notificationsOn = !this.notificationsOn; }
-  toggleGetOffers(){ this.getOffersOn = !this.getOffersOn; }
+  // overlay handlers
+  closeOffer(){ this.showOffer = false; this.selectedOffer = null; }
+  onDecline(){ if (this.selectedOffer) this.closeOffer(); }
+  onCounter(){ console.log('Counter-offer', this.selectedOffer); }
+  onAccept(){  console.log('Accepted', this.selectedOffer); this.closeOffer(); }
 }

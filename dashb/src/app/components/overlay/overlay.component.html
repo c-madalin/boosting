@@ -1,0 +1,5 @@
+<div *ngIf="open" class="overlay" (click)="onBackdrop($event)">
+  <div class="overlay__content" (click)="stop($event)">
+    <ng-content></ng-content>
+  </div>
+</div>

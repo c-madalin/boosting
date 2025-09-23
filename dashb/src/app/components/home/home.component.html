@@ -1,34 +1,41 @@
 <div class="page">
+  <!-- HEADER -->
   <div class="page-header">
     <h1>Boosting Dashboard</h1>
 
     <div class="actions">
-      <!-- Clopoțel notificări -->
-      <button class="btn bell" [class.active]="notificationsOn" (click)="toggleNotifications()">
+      <!-- clopoțelul de notificări -->
+      <button class="btn btn-success lg">
         <i class="fa-solid fa-bell"></i>
-        <span>Boosting Notifications</span>
+        Notifications
       </button>
 
-      <!-- Switch Get Boosting Offers -->
+      <!-- switch pentru Get Boosting Offers -->
       <label class="switch">
-        <input type="checkbox" [checked]="getOffersOn" (change)="toggleGetOffers()" />
+        <input type="checkbox" [(ngModel)]="offersEnabled" />
         <span class="slider"></span>
         <span class="label">Get Boosting Offers</span>
       </label>
     </div>
   </div>
 
-  <!-- search + un singur filtru + perioadă -->
-  <app-search-bar (searchChange)="onSearch($event)">
-    <app-filter-button filters
+  <!-- SEARCH BAR + FILTRE -->
+  <app-search-bar
+    (searchChange)="onSearch($event)"
+    (viewClick)="onViewClick()"
+  >
+    <!-- filtrele tale -->
+    <app-filter-button
+      filters
       label="+ Status"
-      [options]="typeOptions"
-      [selected]="filters.type"
-      (selectedChange)="onTypeChange($event)">
+      [options]="statusOptions"
+      [selected]="filters.status"
+      (selectedChange)="onStatusChange($event)">
     </app-filter-button>
 
-    <app-filter-button filters
-      label="+ Period"
+    <app-filter-button
+      filters
+      label="+ Date"
       [options]="dateOptions"
       [multiple]="false"
       [selected]="datePreset"
@@ -36,12 +43,20 @@
     </app-filter-button>
   </app-search-bar>
 
-  <!-- tabel nou -->
+  <!-- TABEL -->
   <app-boosting-table
     [rows]="rows"
-    (selectionChange)="onSelectionChange($event)"
     (rowAction)="onRowAction($event)">
   </app-boosting-table>
-
-  <!-- aici, ulterior, poți adăuga “tabelul calendaristic” (mini-dashboard de perioadă) -->
 </div>
+
+<!-- OVERLAY -->
+<app-overlay [open]="showOffer" (backdropClick)="closeOffer()">
+  <app-boost-offer-alert
+    *ngIf="selectedOffer"
+    [offer]="selectedOffer"
+    (decline)="onDecline()"
+    (counter)="onCounter()"
+    (accept)="onAccept()"
+  />
+</app-overlay>

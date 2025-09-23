@@ -10,6 +10,8 @@ import { BoostOfferAlertComponent } from '../boost-offer-alert/boost-offer-alert
 
 import { BoostOffer } from '../../types/boost-offer.model';
 
+// ... importurile rămân aceleași
+
 @Component({
   selector: 'app-home',
   standalone: true,
@@ -26,20 +28,24 @@ import { BoostOffer } from '../../types/boost-offer.model';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent {
-  // mock rows
+  // mock rows pentru tabel
   private allRows: ItemRow[] = [
-    { id:1, name:'Duo Queue — Gold II → Plat IV', game:'Valorant',          status:'Active', views:312, price:'$100',  updated:'2 hours ago' },
+    { id:1, name:'Duo Queue — Gold II → Plat IV', game:'Valorant', status:'Active', views:312, price:'$100',  updated:'2 hours ago' },
     { id:2, name:'Solo — Silver → Gold',          game:'League of Legends', status:'Draft',  views: 88,  price:'$85',   updated:'yesterday' },
     { id:3, name:'Coaching 1h',                   game:'CS2',               status:'Hidden', views:145,  price:'€20/h', updated:'3 days ago' },
   ];
   rows: ItemRow[] = [...this.allRows];
 
-  // map cu detaliile pentru overlay
+  // ofertele disponibile
   private offersById = new Map<number | string, BoostOffer>([
     [1, { gameName: 'Valorant', currentRank: 'Gold II', desiredRank: 'Platinum I', currentRP: '2450', platform: 'PC', notes: 'Prefer evening session. Can start now.', priceUSD: 100, sectionLabel: 'Section 1' }],
     [2, { gameName: 'League of Legends', currentRank: 'Silver I', desiredRank: 'Gold IV', currentRP: '0', platform: 'PC', notes: 'Client wants fast queue times.', priceUSD: 85, sectionLabel: 'Section 1' }],
     [3, { gameName: 'CS2', currentRank: '—', desiredRank: '—', currentRP: '—', platform: 'PC', notes: 'Hourly coaching / plays.', priceUSD: 20, sectionLabel: 'Coaching' }],
   ]);
+
+  // dropdown notificări
+  notifOpen = false;
+  notifications: BoostOffer[] = [...this.offersById.values()];
 
   // state filtre
   filters = { q: '', status: [] as string[], datePreset: [] as string[] };
@@ -54,14 +60,24 @@ export class HomeComponent {
   ];
   datePreset: string[] = [];
 
-  // switch pentru Get Boosting Offers
   offersEnabled = true;
 
   // overlay state
   showOffer = false;
   selectedOffer: BoostOffer | null = null;
 
-  // handlers search / filtre
+  // --- dropdown handlers
+  toggleNotifDropdown() {
+    this.notifOpen = !this.notifOpen;
+  }
+
+  openFromNotif(offer: BoostOffer) {
+    this.selectedOffer = offer;
+    this.showOffer = true;
+    this.notifOpen = false;
+  }
+
+  // --- filtrare
   onSearch(term: string){ this.filters.q = term; this.applyFilters(); }
   onStatusChange(v: string[]){ this.filters.status = v; this.applyFilters(); }
   onDatePresetChange(v: string[]){ this.datePreset = v; this.filters.datePreset = v; this.applyFilters(); }
@@ -81,15 +97,8 @@ export class HomeComponent {
     this.rows = list;
   }
 
-  // tabel row actions
+  // --- row actions (View dezactivat momentan)
   onRowAction(e: { action:'view'|'edit'|'delete'|'promote'; row: ItemRow }) {
-    if (e.action === 'view') {
-      const offer = this.offersById.get(e.row.id ?? '');
-      if (offer) {
-        this.selectedOffer = offer;
-        this.showOffer = true;
-      }
-    }
     if (e.action === 'delete') {
       this.rows = this.rows.filter(r => r !== e.row);
     }

@@ -4,11 +4,24 @@
     <h1>Boosting Dashboard</h1>
 
     <div class="actions">
-      <!-- clopoțelul de notificări -->
-      <button class="btn btn-success lg">
-        <i class="fa-solid fa-bell"></i>
-        Notifications
-      </button>
+      <!-- dropdown de notificări -->
+      <div class="notif-wrap">
+        <button class="btn btn-success lg" (click)="toggleNotifDropdown()">
+          <i class="fa-solid fa-bell"></i>
+          Notifications
+        </button>
+
+        <div class="notif-dropdown" *ngIf="notifOpen">
+          <div
+            class="notif-item"
+            *ngFor="let offer of notifications"
+            (click)="openFromNotif(offer)">
+            <div class="notif-title">{{ offer.gameName }}</div>
+            <div class="notif-sub">Offer to {{ offer.desiredRank }}</div>
+          </div>
+          <div *ngIf="!notifications.length" class="notif-empty">No notifications</div>
+        </div>
+      </div>
 
       <!-- switch pentru Get Boosting Offers -->
       <label class="switch">
@@ -24,7 +37,6 @@
     (searchChange)="onSearch($event)"
     (viewClick)="onViewClick()"
   >
-    <!-- filtrele tale -->
     <app-filter-button
       filters
       label="+ Status"

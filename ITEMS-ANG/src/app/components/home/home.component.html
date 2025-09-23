@@ -1,79 +1,33 @@
-  <div class="page" style="max-width:1100px; margin:0 auto;">
-
+<div class="page">
   <div class="page-header">
-    <h1>Accounts</h1>
+    <h1>Items</h1>
 
     <div class="actions">
-      <button class="btn btn-primary" (click)="openNewListing()">
+      <button class="btn btn-success lg" (click)="openNewListing()">
         <span class="icon">＋</span>
-        Create a New Listing
+        New Item Listing
       </button>
-      <button class="btn btn-primary" (click)="openNewCurrencyOffer()">
-        <span class="icon">＋</span>
-        Create a Currency Offer
-      </button>
+
     </div>
   </div>
 
- <app-search-bar
-  (searchChange)="onSearch($event)"
-  (viewClick)="onViewClick()"
->
-    <app-filter-button
-      filters
-      label="+ Game"
-      [options]="gameOptions"
-      [selected]="filters.game"
-      (selectedChange)="setFilter('game', $event)">
-    </app-filter-button>
-
-    <app-filter-button
-      filters
-      label="+ Status"
-      [options]="statusOptions"
-      [selected]="filters.status"
-      (selectedChange)="onStatusChange($event)">
-    </app-filter-button>
-
-    <app-filter-button
-      filters
-      label="+ Rating"
-      [options]="ratingOptions"
-      [selected]="filters.rating"
-      (selectedChange)="onRatingChange($event)">
-    </app-filter-button>
-
-    <app-filter-button
-      filters
-      label="+ Server"
-      [options]="serverOptions"
-      [selected]="filters.server"
-      (selectedChange)="setFilter('server', $event)">
-    </app-filter-button>
-
-    <app-filter-button
-      filters
-      label="+ Discounted"
-      [options]="[{ value: 'yes', label: 'Discounted only' }]"
-      [multiple]="false"
-      [selected]="filters.discounted ? ['yes'] : []"
-      (selectedChange)="setFilter('discounted', $event.includes('yes'))">
-    </app-filter-button>
-
-    <app-filter-button
-      filters
-      label="+ Date"
-      [options]="dateOptions"
-      [multiple]="false"
-      [selected]="datePreset"
-      (selectedChange)="onDatePresetChange($event)">
-    </app-filter-button>
+  <!-- search + filtre + tabel rămân identice -->
+  <app-search-bar
+    (searchChange)="onSearch($event)"
+    (viewClick)="onViewClick()"
+  >
+    <!-- slot filtre -->
+    <app-filter-button filters label="+ Game" [options]="gameOptions" [selected]="filters.game" (selectedChange)="setFilter('game', $event)"></app-filter-button>
+    <app-filter-button filters label="+ Status" [options]="statusOptions" [selected]="filters.status" (selectedChange)="onStatusChange($event)"></app-filter-button>
+    <app-filter-button filters label="+ Rating" [options]="ratingOptions" [selected]="filters.rating" (selectedChange)="onRatingChange($event)"></app-filter-button>
+    <app-filter-button filters label="+ Server" [options]="serverOptions" [selected]="filters.server" (selectedChange)="setFilter('server', $event)"></app-filter-button>
+    <app-filter-button filters label="+ Discounted" [options]="[{ value:'yes', label:'Discounted only' }]" [multiple]="false" [selected]="filters.discounted ? ['yes'] : []" (selectedChange)="setFilter('discounted', $event.includes('yes'))"></app-filter-button>
+    <app-filter-button filters label="+ Date" [options]="dateOptions" [multiple]="false" [selected]="datePreset" (selectedChange)="onDatePresetChange($event)"></app-filter-button>
   </app-search-bar>
 
   <app-items-table
-  [rows]="rows"
-  (selectionChange)="onSelectionChange($event)"
-  (rowAction)="onRowAction($event)">
-</app-items-table>
-
+    [rows]="rows"
+    (selectionChange)="onSelectionChange($event)"
+    (rowAction)="onRowAction($event)">
+  </app-items-table>
 </div>

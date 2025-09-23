@@ -1,0 +1,41 @@
+<div class="page">
+  <div class="page-header">
+    <h1>Items</h1>
+
+    <div class="actions">
+      <button class="btn btn-success lg" (click)="openNewListing()">
+        <span class="icon">＋</span>
+        New Item Listing
+      </button>
+
+    </div>
+  </div>
+
+  <!-- search + filtre + tabel rămân identice -->
+  <app-search-bar
+    (searchChange)="onSearch($event)"
+    (viewClick)="onViewClick()"
+  >
+    <!-- slot filtre -->
+    <app-filter-button filters label="+ Game" [options]="gameOptions" [selected]="filters.game" (selectedChange)="setFilter('game', $event)"></app-filter-button>
+    <app-filter-button filters label="+ Status" [options]="statusOptions" [selected]="filters.status" (selectedChange)="onStatusChange($event)"></app-filter-button>
+    <app-filter-button filters label="+ Discounted" [options]="[{ value:'yes', label:'Discounted only' }]" [multiple]="false" [selected]="filters.discounted ? ['yes'] : []" (selectedChange)="setFilter('discounted', $event.includes('yes'))"></app-filter-button>
+    <app-filter-button filters label="+ Date" [options]="dateOptions" [multiple]="false" [selected]="datePreset" (selectedChange)="onDatePresetChange($event)"></app-filter-button>
+  </app-search-bar>
+
+  <app-items-table
+    [rows]="rows"
+    (selectionChange)="onSelectionChange($event)"
+    (rowAction)="onRowAction($event)">
+  </app-items-table>
+  <!-- formularul de creare item listing -->
+
+
+<app-overlay *ngIf="showNewListing" (close)="closeNewListing()">
+  <app-item-listing
+    [categories]="categories"
+    [feePercent]="10"
+    (submitted)="onListingSubmitted($event)">
+  </app-item-listing>
+</app-overlay>
+</div>

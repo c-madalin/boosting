@@ -1,0 +1,141 @@
+/* === OVERLAY cu blur === */
+.overlay{
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,.35);
+  backdrop-filter: blur(8px) saturate(120%);
+  z-index: 10000;
+  display: grid; place-items: center;
+}
+
+/* === PANOU central (header | body | footer) === */
+.panel{
+  width: min(900px, calc(100vw - 32px));
+  height: min(90vh, 920px);
+  background: var(--panel-2, #0f1722);
+  border: 1px solid var(--border, #1f2a37);
+  border-radius: 14px;
+  box-shadow: 0 20px 60px rgba(0,0,0,.5);
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  overflow: hidden;
+}
+
+/* === HEADER === */
+.header{
+  display:flex; align-items:center; justify-content:space-between;
+  padding:12px 16px; border-bottom:1px solid var(--border,#1f2a37);
+  background: var(--panel, #121925);
+}
+.header h3{ margin:0; font-size:18px; font-weight:700; color:var(--text,#e7eefb); }
+.x{ background:transparent; border:0; color:var(--text,#e7eefb); font-size:18px; cursor:pointer; }
+
+/* === BODY – scroll intern (scrollbar ascuns) === */
+.body{
+  position: relative;
+  overflow: auto;
+  padding:16px;
+  background: linear-gradient(180deg, #0f1622 0%, #0f1722 100%);
+
+  /* Firefox */
+  scrollbar-width: none;          /* ascuns complet */
+  scrollbar-gutter: stable;
+  overscroll-behavior: contain;
+}
+/* WebKit (Chrome/Edge/Safari) – ascuns complet */
+.body::-webkit-scrollbar{ width:0!important; height:0!important; }
+.body::-webkit-scrollbar-thumb{ background:transparent; }
+.body::-webkit-scrollbar-track{ background:transparent; }
+
+/* Fade edges – hint vizual de conținut */
+.body::before,
+.body::after{
+  content:"";
+  position:absolute; left:0; right:0;
+  height:18px; pointer-events:none; z-index:1;
+}
+.body::before{
+  top:0;
+  background: linear-gradient(180deg, rgba(0,0,0,.25), rgba(0,0,0,0));
+}
+.body::after{
+  bottom:0;
+  background: linear-gradient(0deg, rgba(0,0,0,.25), rgba(0,0,0,0));
+}
+
+/* === CARD/SECTION === */
+.card{
+  border:1px solid var(--border,#1f2a37);
+  background:#0f141b;
+  border-radius:12px;
+  padding:14px;
+  margin-bottom:14px;
+}
+.card h4{ margin:0 0 12px 0; color:var(--text,#e7eefb); font-size:16px; }
+.hdr{ display:flex; align-items:center; gap:8px; }
+.opt{ opacity:.7; font-size:12px; }
+
+/* === GRID & COLS === */
+.grid-2{ display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+.col{ display:flex; flex-direction:column; gap:8px; }
+.col.full{ grid-column: 1 / -1; }
+
+label{ font-weight:600; color:var(--text,#e7eefb); }
+
+input, select, textarea, .unit-inline{
+  background:#0b121a; border:1px solid var(--border,#1f2a37);
+  color:var(--text,#e7eefb); border-radius:10px; padding:10px 12px;
+}
+
+/* Form controls să ocupe lățimea cardului */
+.card input,
+.card select,
+.card textarea,
+.row-split > input,
+.row-split > select{
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Delivery textarea pe lățime completă + înălțime utilă */
+.card textarea{ resize:vertical; min-height:140px; }
+
+/* === Price row === */
+.price-row{ display:flex; align-items:center; gap:8px; }
+.cur{ width:110px; }
+.unit{ opacity:.9; display:flex; align-items:center; gap:6px; }
+.unit-inline{ width:90px; }
+
+/* === Row split cu addon (ex: stock + unit) === */
+.row-split{ display:grid; grid-template-columns:1fr auto; gap:8px; align-items:center; }
+.addon{
+  background:#0b121a; border:1px solid var(--border,#1f2a37);
+  padding:10px 12px; border-radius:10px; color:var(--muted,#8a95a6);
+}
+
+/* === FEES === */
+.fees{ display:flex; flex-direction:column; gap:8px; }
+.fees .row{ display:flex; align-items:center; justify-content:space-between; }
+.fees .total{ border-top:1px solid var(--border,#1f2a37); padding-top:8px; font-weight:700; }
+
+/* === FOOTER === */
+.footer{
+  display:flex; justify-content:flex-end; gap:10px;
+  border-top:1px solid var(--border,#1f2a37);
+  padding:12px 16px; background: var(--panel, #121925);
+}
+.btn{
+  background:#1a2230; border:1px solid var(--border,#1f2a37);
+  color:var(--text,#e7eefb); padding:10px 14px; border-radius:10px; cursor:pointer;
+}
+.btn.ghost{ background:transparent; }
+.btn.primary {
+  background: #45d483;         /* green */
+  border-color: #45d483;
+  color: white;
+}
+.btn:disabled{ opacity:.6; cursor:not-allowed; }
+
+/* === Responsive === */
+@media (max-width: 860px){
+  .grid-2{ grid-template-columns:1fr; }
+}

@@ -1,0 +1,19 @@
+<div class="shell">
+  <div class="row">
+    <div class="input-wrap">
+      <span class="icon" aria-hidden="true">🔍</span>
+      <input
+        type="text"
+        [value]="value"
+        (input)="emitChange($any($event.target).value)"
+        placeholder="Search..."
+        aria-label="Search"
+      />
+      <kbd class="kbd">/</kbd>
+    </div>
+
+    <div class="filters">
+      <ng-content></ng-content>
+    </div>
+  </div>
+</div>

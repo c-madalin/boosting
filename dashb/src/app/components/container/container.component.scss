@@ -1,0 +1,38 @@
+:host{
+  /* tema locală, moștenită de copii */
+  --bg:#0b1118;
+  --panel:#111a25;
+  --panel-2:#0f1722;
+  --border:#1f2a37;
+  --muted:#8a95a6;
+  --text:#e7eefb;
+  --accent:#2f64ff;
+  --green:#45d483;
+
+  display:block;
+  min-height:100dvh;
+  width:100%;
+  background:var(--bg);
+  color:var(--text);
+  font-family:Inter, system-ui, Segoe UI, Roboto, Arial, sans-serif;
+  overflow:hidden; /* body-ul nu mai are scroll */
+}
+
+/* wrapperul ia scroll-ul (ascuns vizual) */
+.container-wrapper{
+  min-height:100dvh;
+  width:100%;
+  display:flex;
+  justify-content:center;
+  align-items:flex-start;
+  padding:32px 0;    /* aer */
+  overflow:auto;
+  scrollbar-width:none; -ms-overflow-style:none;
+}
+.container-wrapper::-webkit-scrollbar{ width:0; height:0; }
+
+.main-content{
+  width:100%;
+  max-width:1440px;   /* mai lat decât înainte */
+  padding:0 32px;     /* “gutter” întunecat, nu alb */
+}

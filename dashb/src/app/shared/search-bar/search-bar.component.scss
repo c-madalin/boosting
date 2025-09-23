@@ -1,0 +1,73 @@
+:host{ display:block; }
+
+/* --- CHENARUL (panoul) --- */
+.shell{
+  background: #0f141b;                           /* panou */
+  border: 1px solid var(--border,#1f2a37);
+  border-radius: 14px;
+  padding: 10px;                                  /* spațiu în jurul conținutului */
+}
+
+/* rândul cu input + filtre */
+.row{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  flex-wrap: wrap;                                /* să nu se suprapună pe ecrane mici */
+}
+
+/* --- INPUT SLIM --- */
+.input-wrap{
+  --h: 36px;
+  --bg: #0b121a;
+  --bd: #1f2a37;
+  --tx: #e7eefb;
+
+  position: relative;
+  display:flex;
+  align-items:center;
+  height: var(--h);
+  min-width: 260px;
+  background: var(--bg);
+  border: 1px solid var(--bd);
+  border-radius: 12px;
+  padding: 0 34px 0 34px;                         /* loc pt. icon + kbd */
+}
+
+.input-wrap:focus-within{
+  border-color: #2a7fff33;
+  box-shadow: 0 0 0 2px #2a7fff1a;
+}
+
+.icon{
+  position:absolute; left:10px; font-size:14px; opacity:.7; pointer-events:none;
+}
+
+.kbd{
+  position:absolute; right:8px;
+  min-width:22px; height:22px; display:grid; place-items:center;
+  font-size:12px; color:#cfd8e6;
+  background:#121825; border:1px solid #2a3648; border-bottom-width:2px;
+  border-radius:6px; padding:0 6px; opacity:.6; pointer-events:none; user-select:none;
+}
+
+input{
+  width:100%; height:100%;
+  border:0; outline:0; background:transparent;
+  color:var(--tx); font-size:14px; line-height:1;
+}
+
+/* --- butoanele/filtrele din dreapta --- */
+.filters{
+  display:flex; align-items:center; gap:8px;
+}
+
+/* variantă și mai compactă dacă pui class="xs" pe <app-search-bar> */
+:host(.xs) .input-wrap{ --h: 32px; border-radius:10px; }
+:host(.xs) input{ font-size:13px; }
+
+/* responsive mic */
+@media (max-width: 640px){
+  .row{ gap:8px; }
+  .input-wrap{ min-width: 200px; }
+}

@@ -1,0 +1,58 @@
+<article class="panel">
+  <header class="panel__header">
+    <div class="title">Notifications</div>
+    <div class="tools">
+      <button class="chip" type="button">READ ALL</button>
+      <button class="ghost" type="button">Mute</button>
+      <button class="icon" type="button" (click)="close.emit()">✕</button>
+    </div>
+  </header>
+
+  <div class="table-wrap">
+    <div class="thead">
+      <div class="th date">DATE</div>
+      <div class="th type">PRICE</div>
+      <div class="th details">DETAILS</div>
+    </div>
+
+    <div class="tbody">
+      <div class="row" *ngFor="let n of items; trackBy: trackById">
+        <!-- DATE = Nume joc + ora (cum ai cerut) -->
+        <div class="td date">
+          <div class="game">{{ n.offer.gameName }}</div>
+          <div class="time">{{ n.time }}</div>
+        </div>
+
+        <!-- PRICE -->
+        <div class="td type">
+          <div class="price">{{ n.offer.priceUSD }}$</div>
+        </div>
+
+        <!-- DETAILS = cerințele una sub alta + additional comments + acțiuni -->
+        <div class="td details">
+          <ul class="req">
+            <li><span>Current Rank:</span> <b>{{ n.offer.currentRank }}</b></li>
+            <li><span>Rank Desired:</span> <b>{{ n.offer.desiredRank }}</b></li>
+            <li><span>Current RP:</span> <b>{{ n.offer.currentRP }}</b></li>
+            <li><span>Platform:</span> <b>{{ n.offer.platform }}</b></li>
+            <li class="comments" *ngIf="n.offer.notes">
+              <span>Additional Comments:</span>
+              <div class="box">{{ n.offer.notes }}</div>
+            </li>
+          </ul>
+
+          <div class="actions">
+            <button class="btn btn-danger" type="button" (click)="ignore.emit(n)">Ignore the offer</button>
+            <button class="btn btn-success" type="button" (click)="take.emit(n.offer)">Take the offer</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="empty" *ngIf="!items?.length">No notifications</div>
+    </div>
+  </div>
+
+  <footer class="panel__footer">
+    <button class="view-all" type="button" (click)="close.emit()">CLOSE</button>
+  </footer>
+</article>

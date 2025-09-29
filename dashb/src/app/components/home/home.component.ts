@@ -7,16 +7,9 @@ import { FilterButtonComponent, FilterOption } from '../../shared/filter-button/
 import { BoostingTableComponent, ItemRow } from '../../shared/boosting-table/boosting-table.component';
 import { OverlayComponent } from '../overlay/overlay.component';
 import { BoostOfferAlertComponent } from '../boost-offer-alert/boost-offer-alert.component';
+import { NotificationsPanelComponent, NotifPanelItem } from '../notifications-panel/notifications-panel.component';
 
 import { BoostOffer } from '../../types/boost-offer.model';
-
-type NotifItem = {
-  id: number | string;
-  offer: BoostOffer;
-  subtitle: string;  // ex: "You received a new offer"
-  date: string;      // ex: "2025-08-27"
-  time: string;      // ex: "09:00"
-};
 
 @Component({
   selector: 'app-home',
@@ -28,7 +21,8 @@ type NotifItem = {
     FilterButtonComponent,
     BoostingTableComponent,
     OverlayComponent,
-    BoostOfferAlertComponent
+    BoostOfferAlertComponent,
+    NotificationsPanelComponent
   ],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
@@ -42,51 +36,56 @@ export class HomeComponent {
   ];
   rows: ItemRow[] = [...this.allRows];
 
-  // ofertele disponibile (exact ca BoostOffer)
+  // ofertele disponibile
   private offersById = new Map<number | string, BoostOffer>([
     [1, { gameName: 'Valorant',           currentRank: 'Gold II',  desiredRank: 'Platinum I', currentRP: '2450', platform: 'PC', notes: 'Prefer evening session. Can start now.', priceUSD: 100, sectionLabel: 'Section 1' }],
     [2, { gameName: 'League of Legends',  currentRank: 'Silver I', desiredRank: 'Gold IV',    currentRP: '0',    platform: 'PC', notes: 'Client wants fast queue times.',           priceUSD: 85,  sectionLabel: 'Section 1' }],
     [3, { gameName: 'CS2',                currentRank: '—',       desiredRank: '—',          currentRP: '—',    platform: 'PC', notes: 'Hourly coaching / plays.',                  priceUSD: 20,  sectionLabel: 'Coaching' }],
   ]);
 
-  // === NOTIFICATIONS (clopoțel) ===
+  // === NOTIFICATIONS dropdown ===
   notifOpen = false;
+  openNotif(){ this.notifOpen = true; }
+  closeNotif(){ this.notifOpen = false; }
+  toggleNotifDropdown(){ this.notifOpen = !this.notifOpen; }
 
-  // lista „îmbrăcată” pentru UI, dar fiecare item conține chiar BoostOffer-ul
-  notifItems: NotifItem[] = [
-    { id: 1, offer: this.offersById.get(1)!, subtitle: 'You received a new offer', date:'2025-08-27', time:'09:00' },
-    { id: 2, offer: this.offersById.get(2)!, subtitle: 'You received a new offer', date:'2025-07-14', time:'10:59' },
-    { id: 3, offer: this.offersById.get(3)!, subtitle: 'You received a new offer', date:'2025-07-09', time:'19:00' },
+  // lista pentru UI (conține BoostOffer-ul)
+  notifItems: NotifPanelItem[] = [
+    { id:1, offer:this.offersById.get(1)!, subtitle:'You received a new offer', date:'2025-08-27', time:'09:00' },
+    { id:2, offer:this.offersById.get(2)!, subtitle:'You received a new offer', date:'2025-07-14', time:'10:59' },
+    { id:3, offer:this.offersById.get(3)!, subtitle:'You received a new offer', date:'2025-07-09', time:'19:00' },
   ];
-  get notifications(): BoostOffer[] { return this.notifItems.map(n => n.offer); }
+  trackByNotif = (_: number, n: NotifPanelItem) => n.id;
+
+  // === Panel (VIEW ALL / click pe item) folosește același Overlay ===
+  showNotifPanel = false;
+
+  onViewAll(){ this.showNotifPanel = true; this.closeNotif(); }
+  onOpenFromDropdown(item: NotifPanelItem | BoostOffer){
+    // indiferent dacă vine BoostOffer sau item, deschidem panelul
+    this.showNotifPanel = true;
+    this.closeNotif();
+  }
+
+  onPanelClose(){ this.showNotifPanel = false; }
+  onPanelTake(offer: BoostOffer){
+    this.showNotifPanel = false;
+    this.selectedOffer = offer;
+    this.showOffer = true;
+  }
+  onPanelIgnore(item: NotifPanelItem){
+    this.notifItems = this.notifItems.filter(x => x !== item);
+  }
 
   // switch „Get Boosting Offers”
   offersEnabled = true;
 
-  // overlay state
+  // overlay alert
   showOffer = false;
   selectedOffer: BoostOffer | null = null;
 
-  // === handlers notificări ===
-  trackByNotif = (_: number, n: NotifItem) => n.id;
-
-  toggleNotifDropdown(){ this.notifOpen = !this.notifOpen; }
-  openNotif(){ this.notifOpen = true; }
-  closeNotif(){ this.notifOpen = false; }
-
-  openFromNotif(offer: BoostOffer){
-    this.selectedOffer = offer;
-    this.showOffer = true;
-    this.closeNotif();
-  }
-
-  // închide panoul la Escape
-  @HostListener('document:keydown.escape')
-  onEsc(){ this.closeNotif(); }
-
-  // === filtrare tabel ===
+  // filtrare tabel
   filters = { q: '', status: [] as string[], datePreset: [] as string[] };
-
   statusOptions: FilterOption[] = [
     { value:'Active' }, { value:'Draft' }, { value:'Hidden' }, { value:'Sold' }
   ];
@@ -116,16 +115,14 @@ export class HomeComponent {
     this.rows = list;
   }
 
-  // === row actions (View dezactivat) ===
+  // tabel actions (View dezactivat)
   onRowAction(e: { action:'view'|'edit'|'delete'|'promote'; row: ItemRow }) {
-    if (e.action === 'delete') {
-      this.rows = this.rows.filter(r => r !== e.row);
-    }
+    if (e.action === 'delete') this.rows = this.rows.filter(r => r !== e.row);
   }
 
-  // === overlay handlers ===
+  // overlay alert handlers
   closeOffer(){ this.showOffer = false; this.selectedOffer = null; }
-  onDecline(){ if (this.selectedOffer) this.closeOffer(); }
-  onCounter(){ /* send counter-offer flow */ }
-  onAccept(){  /* accept flow */ this.closeOffer(); }
+  onDecline(){ this.closeOffer(); }
+  onCounter(){ /* counter-offer flow */ }
+  onAccept(){  this.closeOffer(); }
 }

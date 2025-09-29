@@ -8,14 +8,24 @@
   background: transparent; border:0; cursor:pointer;
   padding:6px 8px; border-radius:12px; transition:.15s;
 }
-.bell:hover{ background: rgba(255,255,255,.04); }
-.bell__icon{
+.bell__icon {
   width:44px; height:44px; border-radius:999px;
   display:grid; place-items:center;
-  background:#121a25; border:1px solid var(--border,#1f2a37);
+  background:#121a25;
+  border:1px solid var(--border,#1f2a37);
   box-shadow: 0 4px 18px rgba(0,0,0,.25) inset;
-  font-size:18px; color:#d9e7ff;
+
+  font-size:20px;
+  color:#e7eefb;            /* alb-contrast */
+  transition:.2s;
 }
+
+.bell:hover .bell__icon {
+  background:#1a2535;
+  border-color:#2a3b52;
+  color:#45d483;            /* verde la hover */
+}
+
 .bell__text{ display:flex; flex-direction:column; line-height:1.1; }
 .bell__text .t1{ color:#d9e7ff; font-weight:800; font-size:14px; }
 .bell__text .t2{ color:var(--muted,#8a95a6); font-weight:800; font-size:13px; }

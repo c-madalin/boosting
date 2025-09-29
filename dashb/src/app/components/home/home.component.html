@@ -3,18 +3,21 @@
     <h1>Boosting Dashboard</h1>
 
     <div class="top-actions">
-      <!-- Bell + Panel -->
+      <!-- Bell + dropdown -->
       <div class="notif-wrap" (mouseenter)="openNotif()" (mouseleave)="closeNotif()">
         <button type="button" class="bell" (click)="toggleNotifDropdown()">
-          <span class="bell__icon"><i class="fa-solid fa-bell"></i></span>
-          <span class="bell__text">
-            <span class="t1">Notifications</span>
-            <span class="t2">{{ notifications.length }} new</span>
-          </span>
-        </button>
+  <span class="bell__icon">
+    <i class="fa-regular fa-bell"></i>
+  </span>
+  <span class="bell__text">
+    <span class="t1">Notifications</span>
+    <span class="t2">{{ notifItems.length }} new</span>
+  </span>
+</button>
 
-        <!-- PANEL -->
-        <div class="notif-panel" *ngIf="notifOpen">
+
+        <!-- Dropdown mini -->
+        <div class="notif-panel small" *ngIf="notifOpen">
           <div class="notif-panel__arrow"></div>
 
           <header class="np-header">
@@ -30,26 +33,23 @@
             <button
               class="np-row"
               *ngFor="let n of notifItems; trackBy: trackByNotif"
-              (click)="openFromNotif(n.offer)">
+              (click)="onOpenFromDropdown(n)">
               <div class="row-line1">
                 <div class="row-title">{{ n.offer.gameName }}</div>
                 <div class="row-sub">{{ n.subtitle }} • {{ n.time }}</div>
               </div>
               <div class="row-line2">
-                <!-- cerințele din alertă, fără 'Additional comments' -->
                 <span>Current: <b>{{ n.offer.currentRank }}</b></span>
                 <span>Desired: <b>{{ n.offer.desiredRank }}</b></span>
                 <span>RP: <b>{{ n.offer.currentRP }}</b></span>
-                <span>Platform: <b>{{ n.offer.platform }}</b></span>
                 <span>Price: <b>{{ n.offer.priceUSD }}$</b></span>
               </div>
             </button>
-
             <div class="np-empty" *ngIf="!notifItems.length">No notifications</div>
           </div>
 
           <footer class="np-footer">
-            <button type="button" class="view-all">VIEW ALL</button>
+            <button type="button" class="view-all" (click)="onViewAll()">VIEW ALL</button>
           </footer>
         </div>
       </div>
@@ -64,9 +64,7 @@
   </div>
 
   <!-- SEARCH + FILTRE -->
-  <app-search-bar
-    (searchChange)="onSearch($event)"
-    (viewClick)="onViewClick()">
+  <app-search-bar (searchChange)="onSearch($event)" (viewClick)="onViewClick()">
     <app-filter-button filters label="+ Status"
       [options]="statusOptions" [selected]="filters.status"
       (selectedChange)="onStatusChange($event)">
@@ -82,7 +80,16 @@
   <app-boosting-table [rows]="rows" (rowAction)="onRowAction($event)"></app-boosting-table>
 </div>
 
-<!-- OVERLAY -->
+<!-- OVERLAY: notifications panel -->
+<app-overlay [open]="showNotifPanel" (backdropClick)="onPanelClose()">
+  <app-notifications-panel
+    [items]="notifItems"
+    (take)="onPanelTake($event)"
+    (ignore)="onPanelIgnore($event)"
+    (close)="onPanelClose()"/>
+</app-overlay>
+
+<!-- OVERLAY: boost offer alert (centrat) -->
 <app-overlay [open]="showOffer" (backdropClick)="closeOffer()">
   <app-boost-offer-alert
     *ngIf="selectedOffer"
